@@ -50,4 +50,4 @@ print(cov)
 try: 
     save(p)
 except: print("ERROR: Chart Did Not Print")
-print("Open" + file_name + 'to view data')
+print("Open" + file_name + 'to view chart')
