@@ -6,10 +6,15 @@ from bokeh.plotting import figure, output_file, save
 from sklearn.linear_model import LinearRegression
 
 
-#Open CSV and Rename columns to more widely-used names
-lapdata = pd.read_csv('LapData.csv')
-lapdata.columns = ['Time', 'Distance', 'Brake Pressure', 'Steering Angle', 'Vertical GForce', 'Lateral GForce', 'Longitudinal GForce', 'Gear', 'RPM', 'Throttle %', 'Speed MPH']
+#Open CSV, clear empty dataframes, and Rename columns to more widely-used names
+rawdata = pd.read_csv('LapData.csv')
+lapdata = rawdata.dropna(axis='columns', how='all')
+lapdata.columns = ['Time', 'Distance', 'Brake_Pressure', 'Steering_Angle', 'Vertical_GForce', 'Lateral_GForce', 'Longitudinal_GForce', 'Gear', 'RPM', 'Throttle%', 'MPH']
+lapdata.Steering_Angle.abs() 
 variables = str(lapdata.head(0))
+
+"""#Check dataframe
+print(lapdata.head())"""
 
 #Write user prompts to select the variables they wish to compare
 xprompt = 'Type Your Desired X-Axis Variable From '
