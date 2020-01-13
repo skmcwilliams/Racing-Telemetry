@@ -4,10 +4,12 @@ and covariance between the variables you chose and prints them in the terminal. 
 and shows the resulting formula in the legend. The legend displays 
 
 In the background this program:
+- cleans CSV file to identify header
 - renames columns of the CSV file to something that is more recognizeable
 - condenses the data to be one dimensional for statistical purposes
 - concatenantes strings with other variables to create labels, legends, and file names
-- turns the data of one column into the absolute value of the data, making statistically relevant
+- turns the data of the Steering_Angle column/variable into the absolute value of the data, making statistically relevant
+- calculates correlation coefficient and covariancea and prints to terminal
 
 Your variable choices are below:
 - Time: Time throughout the two laps worth of data in 0.05 second increments
