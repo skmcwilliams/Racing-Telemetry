@@ -4,6 +4,7 @@ import numpy as np
 from bokeh.models import Slope, Label
 from bokeh.plotting import figure, output_file, save
 from sklearn.linear_model import LinearRegression
+import traceback
 
 
 #Open CSV, clean data, and Rename columns to more widely-used names
@@ -57,5 +58,6 @@ print(cov)
 
 try: 
     save(p)
-except: print("ERROR: Chart Did Not Print")
+except Exception:
+    traceback.print_exc()
 print("Open" + file_name + 'to view chart')
