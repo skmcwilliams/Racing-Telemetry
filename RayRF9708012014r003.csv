@@ -1,4 +1,22 @@
-"Time","Distance","FBP","Steering","Vertical_acc","Lateral_acc","Longitudinal_a","Calculated_Gea","FF_RPM","FF_THROTTLE","GPS_Speed"
+"Format","AIM CSV File"
+"Venue","Summit point"
+"Vehicle","RF97"
+"User","Ray"
+"Data Source","AIM Data Logger"
+"Comment",""
+"Date","08/01/14"
+"Time","08:45:05"
+"Sample Rate","20"
+"Duration","155.730"
+"Segment","Session"
+"Beacon Markers","77.784, 155.730"
+"Segment Times","1:17.784","1:17.946"
+
+"Time","Distance","FBP","Steering","Vertical_acc","Lateral_acc","Longitudinal_a","Calculated_Gea","FF_RPM","FF_THROTTLE","GPS_Speed",
+"Time","Distance","FBP","Steering","Vertical_acc","Lateral_acc","Longitudinal_a","Calculated_Gea","FF_RPM","FF_THROTTLE","GPS_Speed",
+"sec","km","psi","deg","g","g","g","#","rpm","%","mph",
+"","","1","2","3","4","5","6","7","8","9",
+
 0.000,0.000,-3.540039,1.774648,1.160801,0.027835,-0.039949,4.000000,5947.399902,98.823517,119.415115
 0.050,0.009,-3.173828,1.808451,1.091218,0.027803,-0.057903,4.000000,5993.600098,98.823517,119.452400
 0.100,0.017,-4.150391,1.850704,0.972661,0.051400,-0.049960,4.000000,5947.399902,98.509789,119.483475

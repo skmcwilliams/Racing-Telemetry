@@ -6,15 +6,18 @@ from bokeh.plotting import figure, output_file, save
 from sklearn.linear_model import LinearRegression
 
 
-#Open CSV, clear empty dataframes, and Rename columns to more widely-used names
-rawdata = pd.read_csv('LapData.csv')
+#Open CSV, clean data, and Rename columns to more widely-used names
+rawdata = pd.read_csv('RayRF9708012014r003.csv', skiprows=17,skip_blank_lines=True)
 lapdata = rawdata.dropna(axis='columns', how='all')
 lapdata.columns = ['Time', 'Distance', 'Brake_Pressure', 'Steering_Angle', 'Vertical_GForce', 'Lateral_GForce', 'Longitudinal_GForce', 'Gear', 'RPM', 'Throttle%', 'MPH']
 lapdata.Steering_Angle.abs() 
 variables = str(lapdata.head(0))
 
-"""#Check dataframe
-print(lapdata.head())"""
+
+"""
+#Check dataframe
+print(lapdata.head())
+"""
 
 #Write user prompts to select the variables they wish to compare
 xprompt = 'Type Your Desired X-Axis Variable From'
@@ -29,7 +32,7 @@ yvariable = lapdata[[selecty]]
 y = np.squeeze(np.array(yvariable))
 
 #Create scatterplot of selected variables
-title = 'Lap Data - Summmi Point Raceway'
+title = 'Lap Data - Summit Point Raceway'
 file_name = str(selectx + selecty +'.html')
 p = figure(title=title, x_axis_label=str(selectx), y_axis_label=str(selecty))
 p.title.align = 'center'
