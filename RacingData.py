@@ -17,14 +17,14 @@ variables = str(lapdata.head(0))
 print(lapdata.head())"""
 
 #Write user prompts to select the variables they wish to compare
-xprompt = 'Type Your Desired X-Axis Variable From '
-yprompt = 'Type Your Desired Y-Axis Variable From '
+xprompt = 'Type Your Desired X-Axis Variable From'
+yprompt = 'Type Your Desired Y-Axis Variable From'
 
 #Write Prompts and define variables
-selectx = str(input(xprompt + variables))
+selectx = input(xprompt + variables)
 xvariable = lapdata[[selectx]]
 x = np.squeeze(np.array(xvariable))
-selecty = str(input(yprompt+variables))
+selecty = input(yprompt + variables)
 yvariable = lapdata[[selecty]]
 y = np.squeeze(np.array(yvariable))
 
