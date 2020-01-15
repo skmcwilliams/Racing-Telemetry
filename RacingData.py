@@ -11,12 +11,7 @@ import traceback
 rawdata = pd.read_csv('RayRF9708012014r003.csv', skiprows=17,skip_blank_lines=True)
 lapdata = rawdata.dropna(axis='columns', how='all')
 lapdata.columns = ['Time', 'Distance', 'Brake_Pressure', 'Steering_Angle', 'Vertical_GForce', 'Lateral_GForce', 'Longitudinal_GForce', 'Gear', 'RPM', 'Throttle%', 'MPH']
-"""
-lapdata.Steering_Angle.abs()
-lapdata.Vertical_GForce.abs()
-lapdata.Lateral_GForce.abs()
-lapdata.Longitudinal_GForce.abs()
-"""
+
 #Clean columns so  they can be presented as variables laer on
 variables = []
 for column in lapdata.columns: 
