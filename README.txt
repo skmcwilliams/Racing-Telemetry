@@ -8,7 +8,7 @@ In the background this program:
 - renames columns of the CSV file to something that is more recognizeable
 - condenses the data to be one dimensional for statistical purposes
 - concatenantes strings with other variables to create labels, legends, and file names
-- turns the data of the Steering_Angle column/variable into the absolute value of the data, making statistically relevant
+- cleans column names to become more usable in the user's selection of data
 - calculates correlation coefficient and covariancea and prints to terminal
 
 Your variable choices are below:
@@ -24,12 +24,9 @@ Your variable choices are below:
 - Throttle%: The percent of throttle application by the driver
 - MPH: Speed of vehicle in Miles Per Hour
 
- **Please note that the variable requests say "Empty DataFrame" at the end, please ignore and type one of the given
- variables, which will be listed for you**
 
 The program will request X and Y variables, please type the variables you would like to see and the program will plot them
 into the html file.
 
 Future plans include:
 - adding the statistical data to the plot instead of the terminal
-- removing "Empty DataFrame" from the input request

@@ -11,14 +11,20 @@ import traceback
 rawdata = pd.read_csv('RayRF9708012014r003.csv', skiprows=17,skip_blank_lines=True)
 lapdata = rawdata.dropna(axis='columns', how='all')
 lapdata.columns = ['Time', 'Distance', 'Brake_Pressure', 'Steering_Angle', 'Vertical_GForce', 'Lateral_GForce', 'Longitudinal_GForce', 'Gear', 'RPM', 'Throttle%', 'MPH']
-lapdata.Steering_Angle.abs() 
-variables = str(lapdata.head(0))
-
-
 """
-#Check dataframe
-print(lapdata.head())
+lapdata.Steering_Angle.abs()
+lapdata.Vertical_GForce.abs()
+lapdata.Lateral_GForce.abs()
+lapdata.Longitudinal_GForce.abs()
 """
+#Clean columns so  they can be presented as variables laer on
+variables = []
+for column in lapdata.columns: 
+    if column not in variables: 
+        variables.append(column)
+
+#make variables as string to be easily added to input request below
+variables = str(variables)
 
 #Write user prompts to select the variables they wish to compare
 xprompt = 'Type Your Desired X-Axis Variable From'
@@ -45,19 +51,21 @@ par = np.polyfit(x, y, 1, full=True)
 slope=par[0][0]
 intercept=par[0][1]
 y_predicted = [slope*i + intercept  for i in x]
-p.line(x,y_predicted, color='orange', legend_label='Regression Line: y='+str(round(slope,2))+'x+'+str(round(intercept,2)))
-output_file(file_name)
 
 #TRYING TO ADD MORE DATA TO GRAPH - BELOW DATA PRINTS TO TERMINAL
 covariance = np.cov(x, y, bias=True)[0][1]
 correlation = np.corrcoef(x, y)[0, 1]
 cov = ('Covariance: ' + str(covariance))
 cc = ('Correlation: ' + str(correlation))
-print(cc)
 print(cov)
+print(cc)
+
+#Plot regression line and legend to graph
+p.line(x,y_predicted, color='orange', legend_label='Regression Line: y='+str(round(slope,2))+'x+'+str(round(intercept,2)))
+output_file(file_name)
 
 try: 
     save(p)
 except Exception:
     traceback.print_exc()
-print("Open" + file_name + 'to view chart')
+print("Open " + file_name + ' to view chart')
