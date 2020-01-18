@@ -10,6 +10,8 @@ In the background this program:
 - concatenantes strings with other variables to create labels, legends, and file names
 - cleans column names to become more usable in the user's selection of data
 - calculates correlation coefficient and covariancea and prints to terminal
+- takes the absolute value of all characteristics to accurately represent inputs (throttle, brake pressure, steering angle)
+  relative to outputs (MPH, longitudinal gforce, lateral gforce)
 
 Your variable choices are below:
 - Time: Time throughout the two laps worth of data in 0.05 second increments
@@ -23,7 +25,6 @@ Your variable choices are below:
 - RPM: Revolutions Per Minute of the engine
 - Throttle%: The percent of throttle application by the driver
 - MPH: Speed of vehicle in Miles Per Hour
-
 
 The program will request X and Y variables, please type the variables you would like to see and the program will plot them
 into the html file.

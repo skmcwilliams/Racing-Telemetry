@@ -14,17 +14,14 @@ lapdata.columns = ['Time', 'Distance', 'Brake_Pressure', 'Steering_Angle', 'Vert
 lapdata = abs(lapdata)
 
 #Clean new columns so  they can be presented as variables later on
-variables = []
-for column in lapdata.columns: 
-    if column not in variables: 
-        variables.append(column)
+variables = [column for column in lapdata.columns]
 
 #make variables as string to be easily added to input request below
 variables = str(variables)
 
 #Write user prompts to select the variables they wish to compare
-xprompt = 'Type Your Desired X-Axis Variable From'
-yprompt = 'Type Your Desired Y-Axis Variable From'
+xprompt = 'Type Your Desired X-Axis Variable From '
+yprompt = 'Type Your Desired Y-Axis Variable From '
 
 #Write Prompts and define variables
 selectx = input(xprompt + variables)
@@ -45,7 +42,7 @@ p.circle(x.squeeze(), y.squeeze(), size=2, color="blue", legend_label=str(select
 par = np.polyfit(x, y, 1, full=True)
 slope=par[0][0]
 intercept=par[0][1]
-y_predicted = [slope*i + intercept  for i in x]
+y_predicted = [slope * i + intercept  for i in x]
 
 #TRYING TO ADD MORE DATA TO PLOT - BELOW DATA PRINTS TO TERMINAL
 covariance = np.cov(x, y, bias=True)[0][1]
@@ -59,6 +56,7 @@ print(cc)
 p.line(x,y_predicted, color='orange', legend_label='Regression Line: y='+str(round(slope,2))+'x+'+str(round(intercept,2)))
 output_file(file_name)
 
+#Try to save file, print error if not possible
 try: 
     save(p)
 except Exception:
