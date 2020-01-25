@@ -2,7 +2,7 @@ import csv
 import pandas as pd
 import numpy as np
 from bokeh.models import Slope, Label
-from bokeh.plotting import figure, output_file, save
+from bokeh.plotting import figure, output_file, show
 from sklearn.linear_model import LinearRegression
 import traceback
 
@@ -33,7 +33,8 @@ y = np.squeeze(np.array(yvariable))
 
 #Create scatterplot of selected variables
 file_name = str(selectx + selecty +'.html')
-p = figure(title='Lap Data - Summit Point Raceway', x_axis_label=str(selectx), y_axis_label=str(selecty))
+p = figure(title='Lap Data - Summit Point Raceway', x_axis_label=str(selectx),
+y_axis_label=str(selecty),toolbar_location="left", tools="pan,reset,save,wheel_zoom")
 p.title.align = 'center'
 p.title.text_font = 'helvetica'
 p.circle(x.squeeze(), y.squeeze(), size=2, color="blue", legend_label=str(selectx + ' vs. ' + selecty))
@@ -58,7 +59,7 @@ output_file(file_name)
 
 #Try to save file, print error if not possible
 try: 
-    save(p)
+    show(p)
 except Exception:
     traceback.print_exc()
-print("Open " + file_name + ' to view plot')
+print("View " + file_name + ' in browser to see plot')
