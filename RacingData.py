@@ -8,7 +8,7 @@ import traceback
 
 
 #Open CSV, clean data, renames columns to more widely-used names, takes absolute value of data
-rawdata = pd.read_csv('RayRF9708012014r003.csv', skiprows=17,skip_blank_lines=True)
+rawdata = pd.read_csv('RayRF9708012014r003.csv', skiprows=18,skip_blank_lines=True)
 lapdata = rawdata.dropna(axis='columns', how='all')
 lapdata.columns = ['Time', 'Distance', 'Brake_Pressure', 'Steering_Angle', 'Vertical_GForce', 'Lateral_GForce', 'Longitudinal_GForce', 'Gear', 'RPM', 'Throttle%', 'MPH']
 lapdata = abs(lapdata)
@@ -37,7 +37,7 @@ p = figure(title='Lap Data - Summit Point Raceway', x_axis_label=str(selectx),
 y_axis_label=str(selecty),toolbar_location="left", tools="pan,reset,save,wheel_zoom")
 p.title.align = 'center'
 p.title.text_font = 'helvetica'
-p.circle(x.squeeze(), y.squeeze(), size=2, color="blue", legend_label=str(selectx + ' vs. ' + selecty))
+p.circle(x,y, size=2, color="blue", legend_label=str(selectx + ' vs. ' + selecty))
 
 #Update plot with statistics
 par = np.polyfit(x, y, 1, full=True)
