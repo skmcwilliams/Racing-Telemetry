@@ -55,7 +55,6 @@ print(cc)
 
 #Plot regression line and legend to plot
 p.line(x,y_predicted, color='orange', legend_label='Regression Line: y='+str(round(slope,2))+'x+'+str(round(intercept,2)))
-output_file(file_name)
 
 #Try to save file, print error if not possible
 try: 
