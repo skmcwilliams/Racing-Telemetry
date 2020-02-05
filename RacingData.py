@@ -25,12 +25,14 @@ yprompt = 'Type Your Desired Y-Axis Variable From '
 
 #Write Prompts and define variables
 selectx = input(xprompt + variables)
-xvariable = lapdata[[selectx]]
-x = np.squeeze(np.array(xvariable))
 selecty = input(yprompt + variables)
-yvariable = lapdata[[selecty]]
-y = np.squeeze(np.array(yvariable))
 
+def variable_array(variable):
+    var = lapdata[[variable]]
+    return np.squeeze(np.array(var))
+
+x = variable_array(selectx)
+y = variable_array(selecty)
 #Create scatterplot of selected variables
 file_name = str(selectx + selecty +'.html')
 p = figure(title='Lap Data - Summit Point Raceway', x_axis_label=str(selectx),
@@ -61,4 +63,4 @@ try:
     show(p)
 except Exception:
     traceback.print_exc()
-print("View " + file_name + ' in browser to see plot')
+print('View in browser to see plot')
