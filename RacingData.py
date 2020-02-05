@@ -23,12 +23,6 @@ variables = str(variables)
 xprompt = input('Type Your Desired X-Axis Variable From ' + variables)
 yprompt = input('Type Your Desired Y-Axis Variable From ' + variables)
 
-"""
-#Write Prompts and define variables
-selectx = input(xprompt + variables)
-selecty = input(yprompt + variables)
-"""
-
 def variable_array(variable):
     """convert selected variable to an array for statistics and graphing purposes"""
     var = lapdata[[variable]]
