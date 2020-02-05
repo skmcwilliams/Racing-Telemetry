@@ -28,6 +28,7 @@ selectx = input(xprompt + variables)
 selecty = input(yprompt + variables)
 
 def variable_array(variable):
+    """convert selected variable to an array for statistics and graphing purposes"""
     var = lapdata[[variable]]
     return np.squeeze(np.array(var))
 
