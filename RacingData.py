@@ -20,27 +20,30 @@ variables = [column for column in lapdata.columns]
 variables = str(variables)
 
 #Write user prompts to select the variables they wish to compare
-xprompt = 'Type Your Desired X-Axis Variable From '
-yprompt = 'Type Your Desired Y-Axis Variable From '
+xprompt = input('Type Your Desired X-Axis Variable From ' + variables)
+yprompt = input('Type Your Desired Y-Axis Variable From ' + variables)
 
+"""
 #Write Prompts and define variables
 selectx = input(xprompt + variables)
 selecty = input(yprompt + variables)
+"""
 
 def variable_array(variable):
     """convert selected variable to an array for statistics and graphing purposes"""
     var = lapdata[[variable]]
     return np.squeeze(np.array(var))
 
-x = variable_array(selectx)
-y = variable_array(selecty)
+x = variable_array(xprompt)
+y = variable_array(yprompt)
+
 #Create scatterplot of selected variables
-file_name = str(selectx + selecty +'.html')
-p = figure(title='Lap Data - Summit Point Raceway', x_axis_label=str(selectx),
-y_axis_label=str(selecty),toolbar_location="left", tools="pan,reset,save,wheel_zoom")
+file_name = str(xprompt + yprompt +'.html')
+p = figure(title='Lap Data - Summit Point Raceway', x_axis_label=str(xprompt),
+y_axis_label=str(yprompt),toolbar_location="left", tools="pan,reset,save,wheel_zoom")
 p.title.align = 'center'
 p.title.text_font = 'helvetica'
-p.circle(x,y, size=2, color="blue", legend_label=str(selectx + ' vs. ' + selecty))
+p.circle(x,y, size=2, color="blue", legend_label=str(xprompt + ' vs. ' + yprompt))
 
 #Update plot with statistics
 par = np.polyfit(x, y, 1, full=True)
