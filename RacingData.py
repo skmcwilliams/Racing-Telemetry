@@ -2,7 +2,7 @@ import csv
 import pandas as pd
 import numpy as np
 from bokeh.models import Slope, Label
-from bokeh.plotting import figure, output_file, show
+from bokeh.plotting import figure, show
 from sklearn.linear_model import LinearRegression
 import traceback
 
