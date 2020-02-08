@@ -14,10 +14,7 @@ lapdata.columns = ['Time', 'Distance', 'Brake_Pressure', 'Steering_Angle', 'Vert
 lapdata = abs(lapdata)
 
 #Clean new columns so  they can be presented as variables later on
-variables = [column for column in lapdata.columns]
-
-#make variables as string to be easily added to input request below
-variables = str(variables)
+variables = str([column for column in lapdata.columns])
 
 #Write user prompts to select the variables they wish to compare
 xprompt = input('Type Your Desired X-Axis Variable From ' + variables)
@@ -31,6 +28,31 @@ def variable_array(variable):
 x = variable_array(xprompt)
 y = variable_array(yprompt)
 
+def regression(variable):
+    """Form statistical plotting for regression line (if desired)"""
+    global par
+    par = np.polyfit(x, variable, 1, full=True)
+    global slope 
+    slope = par[0][0]
+    global intercept
+    intercept = par[0][1]
+    return [slope * i + intercept  for i in x]
+
+y_predicted = regression(y)
+
+def stats(variable):
+    """print stats for variables to terminal"""
+    global covariance
+    covariance = np.cov(x, variable, bias=True)[0][1]
+    global correlation
+    correlation = np.corrcoef(x, variable)[0, 1]
+    cov = ('Covariance: ' + str(covariance))
+    cc = ('Correlation: ' + str(correlation))
+    print(cov)
+    print(cc)
+
+stats(y)
+
 #Create scatterplot of selected variables
 file_name = str(xprompt + yprompt +'.html')
 p = figure(title='Lap Data - Summit Point Raceway', x_axis_label=str(xprompt),
@@ -38,21 +60,6 @@ y_axis_label=str(yprompt),toolbar_location="left", tools="pan,reset,save,wheel_z
 p.title.align = 'center'
 p.title.text_font = 'helvetica'
 p.circle(x,y, size=2, color="blue", legend_label=str(xprompt + ' vs. ' + yprompt))
-
-#Update plot with statistics
-par = np.polyfit(x, y, 1, full=True)
-slope=par[0][0]
-intercept=par[0][1]
-y_predicted = [slope * i + intercept  for i in x]
-
-#TRYING TO ADD MORE DATA TO PLOT - BELOW DATA PRINTS TO TERMINAL
-covariance = np.cov(x, y, bias=True)[0][1]
-correlation = np.corrcoef(x, y)[0, 1]
-cov = ('Covariance: ' + str(covariance))
-cc = ('Correlation: ' + str(correlation))
-print(cov)
-print(cc)
-
 #Plot regression line and legend to plot
 p.line(x,y_predicted, color='orange', legend_label='Regression Line: y='+str(round(slope,2))+'x+'+str(round(intercept,2)))
 
