@@ -2,7 +2,7 @@ import csv
 import pandas as pd
 import numpy as np
 from bokeh.models import Slope, Label
-from bokeh.plotting import figure, show
+from bokeh.plotting import figure, show, save, output_file
 from sklearn.linear_model import LinearRegression
 import traceback
 
@@ -10,23 +10,23 @@ import traceback
 #Open CSV, clean data, renames columns to more widely-used names, takes absolute value of data
 rawdata = pd.read_csv('RayRF9708012014r003.csv', skiprows=18,skip_blank_lines=True)
 lapdata = rawdata.dropna(axis='columns', how='all')
-lapdata.columns = ['Time', 'Distance', 'Brake_Pressure', 'Steering_Angle', 'Vertical_GForce', 'Lateral_GForce', 'Longitudinal_GForce', 'Gear', 'RPM', 'Throttle%', 'MPH']
+lapdata.columns = ['Time', 'Distance', 'Brake Pressure', 'Steering Angle', 'Vertical GForce', 'Lateral GForce', 'Longitudinal GForce', 'Gear', 'RPM', 'Throttle%', 'MPH']
 lapdata = abs(lapdata)
 
 #Clean new columns so  they can be presented as variables later on
 variables = str([column for column in lapdata.columns])
 
 #Write user prompts to select the variables they wish to compare
-xprompt = input('Type Your Desired X-Axis Variable From ' + variables)
-yprompt = input('Type Your Desired Y-Axis Variable From ' + variables)
+xvariable = input('Type Your Desired X-Axis Variable From ' + variables)
+yvariable = input('Type Your Desired Y-Axis Variable From ' + variables)
 
 def variable_array(variable):
     """convert selected variable to an array for statistics and graphing purposes"""
     var = lapdata[[variable]]
     return np.squeeze(np.array(var))
 
-x = variable_array(xprompt)
-y = variable_array(yprompt)
+x = variable_array(xvariable)
+y = variable_array(yvariable)
 
 def regression(variable):
     """Form statistical plotting for regression line (if desired)"""
@@ -46,25 +46,26 @@ def stats(variable):
     covariance = np.cov(x, variable, bias=True)[0][1]
     global correlation
     correlation = np.corrcoef(x, variable)[0, 1]
-    cov = ('Covariance: ' + str(covariance))
-    cc = ('Correlation: ' + str(correlation))
+    cov = ('Covariance of ' + str(xvariable) + ' and ' + str(yvariable) + ': ' + str(covariance))
+    cc = ('Correlation of ' + str(xvariable) + ' and ' + str(yvariable) + ': ' + str(correlation))
     print(cov)
     print(cc)
 
 stats(y)
 
 #Create scatterplot of selected variables
-file_name = str(xprompt + yprompt +'.html')
-p = figure(title='Lap Data - Summit Point Raceway', x_axis_label=str(xprompt),
-y_axis_label=str(yprompt),toolbar_location="left", tools="pan,reset,save,wheel_zoom")
+#file_name = str(xvariable + 'vs.' + yvariable +'.html') - only use if saving file
+p = figure(title='Lap Data - Summit Point Raceway', x_axis_label=str(xvariable),
+y_axis_label=str(yvariable),toolbar_location="left", tools="pan,reset,save,wheel_zoom")
 p.title.align = 'center'
 p.title.text_font = 'helvetica'
-p.circle(x,y, size=2, color="blue", legend_label=str(xprompt + ' vs. ' + yprompt))
+p.circle(x,y, size=2, color="blue", legend_label=str(xvariable + ' vs. ' + yvariable))
 #Plot regression line and legend to plot
 p.line(x,y_predicted, color='orange', legend_label='Regression Line: y='+str(round(slope,2))+'x+'+str(round(intercept,2)))
 
 #Try to save file, print error if not possible
-try: 
+try:
+    #output_file(file_name) - only use if saving file
     show(p)
 except Exception:
     traceback.print_exc()
