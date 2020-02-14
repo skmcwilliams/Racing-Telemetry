@@ -16,55 +16,66 @@ lapdata = abs(lapdata)
 #Clean new columns so  they can be presented as variables later on
 variables = str([column for column in lapdata.columns])
 
-#Create variable counter for function
-variable_counter = 0
-def select_variable():
-    """Write user prompts to select the variables they wish to compare"""
-    global variable_counter
-    if variable_counter < 1:
-        selection = input('Type Your Desired X-Axis Variable From ' + variables)   
-    else:
-        selection = input('Type Your Desired Y-Axis Variable From ' + variables)
+class Variable:
+    def __init__(self,name):
+        self.name = name
+        self.counter = 0
+    
+    def assign(self):
+        """user selected variables assigned"""
+        if self.counter < 1:
+            selection = input('Type Your Desired X-Axis Variable From ' + variables)
+            self.counter += 1   
+        else:
+            selection = input('Type Your Desired Y-Axis Variable From ' + variables)
+            self.counter += 1 
 
-    return selection
+        return selection
 
-#Call function for X and Y variables, update counter 
-xvariable = select_variable()
-variable_counter += 1
-yvariable = select_variable()
-variable_counter += 1
+    def array(self,input):
+        """convert selected variable to an array for statistics and graphing purposes"""
+        var = lapdata[[input]]
+        return np.squeeze(np.array(var))
 
-def variable_array(variable):
-    """convert selected variable to an array for statistics and graphing purposes"""
-    var = lapdata[[variable]]
-    return np.squeeze(np.array(var))
+    def regression(self,input):
+        """Form statistical plotting for regression line (if desired)"""
+        global par
+        global x
+        par = np.polyfit(x, input, 1, full=True)
+        global slope 
+        slope = par[0][0]
+        global intercept
+        intercept = par[0][1]
+        return [slope * i + intercept  for i in x]
+    
 
-x = variable_array(xvariable)
-y = variable_array(yvariable)
+#Call to assign X and Y variables
+xvar = Variable('xvar')
+yvar = Variable('yvar')
+xvariable = xvar.assign()
+yvariable = yvar.assign()
+#call to array variables
+x = xvar.array(xvariable)
+y = yvar.array(yvariable)
 
-def regression(variable):
-    """Form statistical plotting for regression line (if desired)"""
-    global par
-    par = np.polyfit(x, variable, 1, full=True)
-    global slope 
-    slope = par[0][0]
-    global intercept
-    intercept = par[0][1]
-    return [slope * i + intercept  for i in x]
+#call to create regession line
+y_predicted = yvar.regression(y)
 
-y_predicted = regression(y)
 
 def stats(variable):
     """print stats for variables to terminal"""
     global covariance
-    covariance = np.cov(x, variable, bias=True)[0][1]
     global correlation
+    global xvariable
+    global yvariable
+    covariance = np.cov(x, variable, bias=True)[0][1]
     correlation = np.corrcoef(x, variable)[0, 1]
     cov = ('Covariance of ' + str(xvariable) + ' and ' + str(yvariable) + ': ' + str(covariance))
     cc = ('Correlation of ' + str(xvariable) + ' and ' + str(yvariable) + ': ' + str(correlation))
     print(cov)
     print(cc)
 
+#call to print stats of X vs. Y
 stats(y)
 
 #Create scatterplot of selected variables
