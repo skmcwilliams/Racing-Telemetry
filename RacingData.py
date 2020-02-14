@@ -1,6 +1,7 @@
 import csv
 import pandas as pd
 import numpy as np
+import scipy
 from bokeh.models import Slope, Label
 from bokeh.plotting import figure, show
 from sklearn.linear_model import LinearRegression
@@ -19,23 +20,24 @@ variables = str([column for column in lapdata.columns])
 class Variable:
     def __init__(self,name):
         self.name = name
-        self.counter = 0
-    
-    def assign(self):
-        """user selected variables assigned"""
-        if self.counter < 1:
-            selection = input('Type Your Desired X-Axis Variable From ' + variables)
-            self.counter += 1   
-        else:
-            selection = input('Type Your Desired Y-Axis Variable From ' + variables)
-            self.counter += 1 
 
+    def xassign(self):
+        """user selected X variable assigned"""
+        selection = input('Type Your Desired X-Axis Variable From ' + variables)
+        if selection not in variables or len(selection) < 3:
+            raise KeyError("Selected variable not available, please re-run program and check spelling")
         return selection
 
-    def array(self,input):
-        """convert selected variable to an array for statistics and graphing purposes"""
-        var = lapdata[[input]]
-        return np.squeeze(np.array(var))
+    def yassign(self):
+        """user selected Y variable assigned"""
+        selection = input('Type Your Desired Y-Axis Variable From ' + variables)
+        if selection not in variables or len(selection) < 3:
+                raise KeyError("Selected variable not available, please re-run program and check spelling")
+        return selection
+
+    def array(self,variable):
+        """convert selected variables to an array for statistics and graphing purposes"""
+        return np.squeeze(np.array(lapdata[[variable]]))
 
     def regression(self,input):
         """Form statistical plotting for regression line (if desired)"""
@@ -52,8 +54,9 @@ class Variable:
 #Call to assign X and Y variables
 xvar = Variable('xvar')
 yvar = Variable('yvar')
-xvariable = xvar.assign()
-yvariable = yvar.assign()
+xvariable = xvar.xassign()
+yvariable = yvar.yassign()
+
 #call to array variables
 x = xvar.array(xvariable)
 y = yvar.array(yvariable)
@@ -61,19 +64,20 @@ y = yvar.array(yvariable)
 #call to create regession line
 y_predicted = yvar.regression(y)
 
-
 def stats(variable):
     """print stats for variables to terminal"""
-    global covariance
-    global correlation
     global xvariable
     global yvariable
-    covariance = np.cov(x, variable, bias=True)[0][1]
-    correlation = np.corrcoef(x, variable)[0, 1]
-    cov = ('Covariance of ' + str(xvariable) + ' and ' + str(yvariable) + ': ' + str(covariance))
-    cc = ('Correlation of ' + str(xvariable) + ' and ' + str(yvariable) + ': ' + str(correlation))
-    print(cov)
-    print(cc)
+    lr = scipy.stats.linregress(x, variable)
+    print('Linear Regression R-Value : ' + str(lr.rvalue))
+    rsqr = lr.rvalue**2
+    print('Linear Regression R-Squared : ' + str(rsqr))
+    print('Linear Regression Std Dev. : ' + str(lr.stderr))
+    print('Linear Regression P-Value : ' + str(lr.pvalue))
+    print(scipy.stats.kendalltau(x, variable))
+    print(scipy.stats.spearmanr(x, variable))
+    print('PearsonrResult' + str(scipy.stats.pearsonr(x, variable)))
+    
 
 #call to print stats of X vs. Y
 stats(y)
