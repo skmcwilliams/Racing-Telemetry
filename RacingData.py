@@ -32,7 +32,7 @@ class Variable:
         """user selected Y variable assigned"""
         selection = str(input('Type Your Desired Y-Axis Variable From ' + variables + ' Variable must be typed exactly as shown: '))
         if selection not in variables or len(selection) < 3:
-                raise KeyError("Selected variable not available, please re-run program and check spelling")
+            raise KeyError("Selected variable not available, please re-run program and check spelling")
         return selection
 
     def array(self,variable):
@@ -48,8 +48,7 @@ class Variable:
         slope = par[0][0]
         global intercept
         intercept = par[0][1]
-        return list(map(lambda i: slope * i, x))
-    
+        return list(map(lambda i: slope * i, x))  
 
 #Call to assign X and Y variables
 xvar = Variable('xvar')
@@ -75,7 +74,6 @@ def stats(y):
     print(scipy.stats.kendalltau(x, y))
     print(scipy.stats.spearmanr(x, y))
     
-
 #call to print stats of X vs. Y
 stats(y)
 
