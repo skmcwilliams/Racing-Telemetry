@@ -9,7 +9,7 @@ import traceback
 
 
 #Open CSV, clean data, renames columns to more widely-used names, takes absolute value of data
-rawdata = pd.read_csv('RayRF9708012014r003.csv', skiprows=18,skip_blank_lines=True)
+rawdata = pd.read_csv('SummitPointFF.csv', skiprows=18,skip_blank_lines=True)
 lapdata = rawdata.dropna(axis='columns', how='all')
 lapdata.columns = ['Time', 'Distance', 'Brake Pressure', 'Steering Angle', 'Vertical GForce', 'Lateral GForce', 'Longitudinal GForce', 'Gear', 'RPM', 'Throttle %', 'MPH']
 lapdata = abs(lapdata)
@@ -48,7 +48,6 @@ class Variable:
         slope = par[0][0]
         global intercept
         intercept = par[0][1]
-        #return [slope * i + intercept  for i in x]
         return list(map(lambda i: slope * i, x))
     
 
