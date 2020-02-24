@@ -23,18 +23,14 @@ class Variable:
 
     def xassign(self):
         """user selected X variable assigned"""
-        try:
-            selection = input('Type Your Desired X-Axis Variable From ' + variables + ' Variable must be typed exactly as shown: ')
-        except KeyError:
-            print("Selected variable not available, please re-run program and check spelling")
-        if selection not in variables:
+        selection = str(input('Type Your Desired X-Axis Variable From ' + variables + ' Variable must be typed exactly as shown: '))
+        if selection not in variables or len(selection) < 3:
             raise KeyError("Selected variable not available, please re-run program and check spelling")
         return selection
 
     def yassign(self):
         """user selected Y variable assigned"""
-        selection = input('Type Your Desired Y-Axis Variable From ' + variables + ' Variable must be typed exactly as shown: ')
-        selection.capitalize()
+        selection = str(input('Type Your Desired Y-Axis Variable From ' + variables + ' Variable must be typed exactly as shown: '))
         if selection not in variables or len(selection) < 3:
                 raise KeyError("Selected variable not available, please re-run program and check spelling")
         return selection

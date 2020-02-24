@@ -26,3 +26,7 @@ Your variable choices are below:
 
 The program will request X and Y variables, please type the variables you would like to see and the program will plot them
 into the html file. You will receive an error if the variable that you typed is not in the dataset
+
+NEW IMPLEMENTATIONS WILL INCLUDE
+- Use wrapper or a second class for the assign to automatically calculate its executions and therefore execute
+ the Y-Axis language automatically after the X-variable has been assigned
