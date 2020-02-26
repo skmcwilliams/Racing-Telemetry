@@ -48,7 +48,7 @@ class Variable:
         slope = par[0][0]
         global intercept
         intercept = par[0][1]
-        return list(map(lambda i: slope * i, x))  
+        return list(map(lambda i: slope * i + intercept, x))
 
 #Call to assign X and Y variables
 xvar = Variable('xvar')
